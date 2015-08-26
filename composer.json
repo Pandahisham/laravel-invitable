@@ -1,0 +1,20 @@
+{
+  "name": "tshafer/laravel-inviteable",
+  "description": "Inviteable Polymorphic Eloquent Models for Laravel 5",
+  "require": {
+    "php": ">=5.5.9",
+    "tshafer/laravel-service-provider": "1.0.*@dev",
+    "illuminate/database": "~5.0|~5.1",
+    "nesbot/carbon": ">=1.20.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Tshafer\\Inviteable\\": "src/"
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  }
+}
