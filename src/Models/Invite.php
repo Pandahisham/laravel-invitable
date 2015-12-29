@@ -1,8 +1,8 @@
 <?php
 
-    namespace Tshafer\Inviteable\Models;
+namespace Tshafer\Inviteable\Models;
 
-    use Carbon\Carbon;
+use Carbon\Carbon;
     use Illuminate\Database\Eloquent\Model;
 
     /**
@@ -10,16 +10,15 @@
      */
     class Invite extends Model
     {
+        /**
+         * @var array
+         */
+        protected $guarded = ['id', 'created_at', 'updated_at'];
 
         /**
          * @var array
          */
-        protected $guarded = [ 'id', 'created_at', 'updated_at' ];
-
-        /**
-         * @var array
-         */
-        protected $dates = [ 'claimed_at' ];
+        protected $dates = ['claimed_at'];
 
         /**
          * @return \Illuminate\Database\Eloquent\Relations\MorphTo
@@ -34,9 +33,9 @@
          *
          * @return Model
          */
-        public function claim( Model $claimer )
+        public function claim(Model $claimer)
         {
-            $this->claimer()->associate( $claimer );
+            $this->claimer()->associate($claimer);
             $this->claimed_at = Carbon::now();
             $this->save();
 
@@ -48,7 +47,7 @@
          */
         public function claimed()
         {
-            return ! empty( $this->claimed_at );
+            return !empty($this->claimed_at);
         }
 
         /**
@@ -56,11 +55,11 @@
          *
          * @return static
          */
-        public static function getNewCode( $data )
+        public static function getNewCode($data)
         {
-            $data[ 'code' ] = bin2hex( openssl_random_pseudo_bytes( 16 ) );
+            $data[ 'code' ] = bin2hex(openssl_random_pseudo_bytes(16));
 
-            return static::create( $data );
+            return static::create($data);
         }
 
         /**
@@ -68,9 +67,9 @@
          *
          * @return mixed
          */
-        public static function getInviteByCode( $code )
+        public static function getInviteByCode($code)
         {
-            return static::where( 'code', '=', $code )->first();
+            return static::where('code', '=', $code)->first();
         }
 
         /**
@@ -78,10 +77,10 @@
          *
          * @return mixed
          */
-        public static function getValidInviteByCode( $code )
+        public static function getValidInviteByCode($code)
         {
-            return static::where( 'code', '=', $code )
-                         ->where( 'claimed_at', '=', null )
+            return static::where('code', '=', $code)
+                         ->where('claimed_at', '=', null)
                          ->first();
         }
     }
